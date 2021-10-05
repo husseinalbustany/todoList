@@ -22,7 +22,8 @@ namespace todoList.Models
         [Required]
         public DateTime DueDate { get; set; }
         public bool Done { get; set; }
-    
+        public DateTime DoneDate { get; set; }
+
     }
 
 

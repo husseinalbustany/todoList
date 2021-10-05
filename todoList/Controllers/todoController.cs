@@ -37,6 +37,7 @@ namespace todoList.Controllers
 
             var tODO = await _context.todo.FindAsync(id);
             tODO.Done = true;
+            tODO.DoneDate = DateTime.Now;
             await _context.SaveChangesAsync();
             // return RedirectToAction(nameof(Index));
             return RedirectToAction("Index", "todo", new { @isAdmin = GlobalVariables.isAdmin });
