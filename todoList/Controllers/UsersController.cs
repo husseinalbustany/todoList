@@ -107,6 +107,8 @@ namespace todoList.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!GlobalVariables.LoggedIn)
+                return RedirectToAction("Login", "Users");
             if (id == null)
             {
                 return NotFound();
@@ -127,6 +129,8 @@ namespace todoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Password,isAdmin")] Users users)
         {
+            if (!GlobalVariables.LoggedIn)
+                return RedirectToAction("Login", "Users");
             if (id != users.Id)
             {
                 return NotFound();
@@ -158,6 +162,8 @@ namespace todoList.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!GlobalVariables.LoggedIn)
+                return RedirectToAction("Login", "Users");
             if (id == null)
             {
                 return NotFound();
@@ -178,6 +184,8 @@ namespace todoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!GlobalVariables.LoggedIn)
+                return RedirectToAction("Login", "Users");
             var users = await _context.Users.FindAsync(id);
             _context.Users.Remove(users);
             await _context.SaveChangesAsync();
