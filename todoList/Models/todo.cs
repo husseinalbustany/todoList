@@ -17,12 +17,15 @@ namespace todoList.Models
 
         public string Description { get; set; }
 
+
+
         [Display(Name = "Due Date")]
         [DataType(DataType.Date)]
         [Required]
         public DateTime DueDate { get; set; }
         public bool Done { get; set; }
-    
+        public DateTime DoneDate { get; set; }
+
     }
 
 

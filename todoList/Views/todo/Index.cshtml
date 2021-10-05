@@ -4,8 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
+<h6>Todo list ordered by done status and due date.</h6>
 <p>
     <a asp-action="Create">Create New</a>
   
@@ -29,66 +29,73 @@
             <th>
                 @Html.DisplayNameFor(model => model.Done)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoneDate)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.OrderByDescending(i => i.DueDate).OrderBy(i => i.Done))
         {
-            <tr>
-                <td>
-                    <b>
-                        @if (item.Done)
+        <tr>
+            <td>
+                <b>
+                    @if (item.Done)
+                    {
+                        <strike>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </strike>
+                    }
+                    else
+                    {
+                        if (item.DueDate <= DateTime.Now.Date)
                         {
-                            <strike>
+                            <h5 style="color:red;">
                                 @Html.DisplayFor(modelItem => item.Name)
-                            </strike>
+                            </h5>
                         }
                         else
                         {
-                            if (item.DueDate <= DateTime.Now.Date)
-                            {
-                                <h5 style="color:red;">
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </h5>
-                            }
-                            else
-                            {
-                                <h5 style="color:blue;">
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </h5>
-                            }
-                        }
-                            </b>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DueDate)
-                </td>
-                <td>
-                  
-
-                    @Html.DisplayFor(modelItem => item.Done)
-                </td>
-                <td>
-                    @if (item.Done == false)
-                    {
-                        <a asp-action="DoneConfirmed" asp-route-id="@item.Id">Done</a>
-                    }
-
-                    @try
-                    {
-                        if ((int)ViewData["isAdmin"] == 1)
-                        {
-                            <a asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                            <h5 style="color:blue;">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h5>
                         }
                     }
-                    catch
-                    { }
-                </td>
-            </tr>
+                </b>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+
+
+                @Html.DisplayFor(modelItem => item.Done)
+            </td>
+            <td>
+                @if (item.Done)
+                    @Html.DisplayFor(modelItem => item.DoneDate)
+            </td>
+            <td>
+                @if (item.Done == false)
+                {
+                    <a asp-action="DoneConfirmed" asp-route-id="@item.Id">Done</a>
+                }
+
+                @try
+                {
+                    if ((int)ViewData["isAdmin"] == 1)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                    }
+                }
+                catch
+                { }
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -37,6 +37,7 @@ namespace todoList.Controllers
 
             var tODO = await _context.todo.FindAsync(id);
             tODO.Done = true;
+            tODO.DoneDate = DateTime.Now;
             await _context.SaveChangesAsync();
             // return RedirectToAction(nameof(Index));
             return RedirectToAction("Index", "todo", new { @isAdmin = GlobalVariables.isAdmin });
@@ -80,6 +81,12 @@ namespace todoList.Controllers
 
             if (ModelState.IsValid)
             {
+                if (todo.DueDate < DateTime.Now.Date)
+                {
+                    return View(todo);
+                }
+
+
                 _context.Add(todo);
                 await _context.SaveChangesAsync();
                 //  return RedirectToAction(nameof(Index));
