@@ -81,10 +81,10 @@ namespace todoList.Controllers
 
             if (ModelState.IsValid)
             {
-                if (todo.DueDate < DateTime.Now.Date)
-                {
-                    return View(todo);
-                }
+                //if (todo.DueDate < DateTime.Now.Date)
+                //{
+                 //   return View(todo);
+                //}
 
 
                 _context.Add(todo);
